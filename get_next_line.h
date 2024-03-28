@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:15 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/28 16:14:33 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:58:24 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 size_t	ft_strlcat(char *dest, char *src, size_t size);
 char *get_next_line(int fd);
+size_t	ft_strlcpy(char *dest, char *src, size_t size);
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *src, int c);
+char	*ft_strdup(char *src);
 
 #endif
