@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:10 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/30 15:13:14 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:47:17 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,43 @@ char	*set_line(char* src)
 	i = 0;
 	while (src[i] != '\n' && src[i] != '\0')
 		i++;
-	dest = malloc(i + 1);
+	dest = malloc(i + 2);
 	if (!dest)
-		return (0);
-	ft_strlcpy(dest, src, i + 1);
+		return (NULL);
+	ft_strlcpy(dest, src, i + 2);
 	return (dest);
 }
 
 char *get_next_line(int fd)
 {
-	static char		*left_s; //to store the excess string after \n
-	char 		*buffer; //to check if there is \n in the stirng?
+	static char		*left_s;
+	char 		*buffer;
 	char		*s;
 	int			b_read;
 
 	if (BUFFER_SIZE > INT_MAX / 2 || BUFFER_SIZE <= 0)
 		return (NULL);
+
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	if (!left_s)
-		ft_strdup("");
-	b_read = read(fd, buffer, BUFFER_SIZE);
-	
-	
-	return (s);
+		
+	b_read = read (fd, buffer, BUFFER_SIZE);
+	left_s = ft_strdup(buffer);
+	while (b_read && !c_nl(left_s))
+	{
+		b_read = read (fd, buffer, BUFFER_SIZE);
+		if (b_read)
+			left_s = ft_strjoin(left_s, buffer);
+	}
+	printf("Left_s= %s\n", left_s);
+	return (0);
 }
 
 int main(int argc, char const *argv[])
 {
 	int fd;
-
+	char *buffer = malloc(100);
 	fd = open("text.txt", O_RDONLY);
-	//char *h = get_next_line(fd);
-	char *a = malloc(10);
-	puts(a);
-	printf("---------------------------\n");
-	// h = get_next_line(fd);
-	// printf("second H: %s", h);
+	char *h = get_next_line(fd);
 }
