@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:10 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/30 16:47:17 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/30 21:20:38 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,26 @@ char *get_next_line(int fd)
 
 	if (BUFFER_SIZE > INT_MAX / 2 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-		
 	b_read = read (fd, buffer, BUFFER_SIZE);
-	left_s = ft_strdup(buffer);
+	if (buffer == NULL)
+		return (NULL);
+	if (left_s == NULL)
+		left_s = ft_strdup(buffer);
+	else if (*left_s == '\n')
+		left_s += 1;
 	while (b_read && !c_nl(left_s))
 	{
 		b_read = read (fd, buffer, BUFFER_SIZE);
 		if (b_read)
 			left_s = ft_strjoin(left_s, buffer);
 	}
-	printf("Left_s= %s\n", left_s);
-	return (0);
+	free(buffer);
+	s = set_line(left_s);
+	left_s = ft_strchr(left_s, '\n');
+	return (s);
 }
 
 int main(int argc, char const *argv[])
@@ -72,4 +77,15 @@ int main(int argc, char const *argv[])
 	char *buffer = malloc(100);
 	fd = open("text.txt", O_RDONLY);
 	char *h = get_next_line(fd);
+	puts(h);
+	char *a = get_next_line(fd);
+	puts(a);
+	char *b = get_next_line(fd);
+	puts(b);
+	b = get_next_line(fd);
+	puts(b);
+	b = get_next_line(fd);
+	puts(b);
+	b = get_next_line(fd);
+	puts(b);
 }
