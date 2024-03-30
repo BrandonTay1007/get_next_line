@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:10 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/30 21:20:38 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/31 00:02:11 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ char *get_next_line(int fd)
 	return (s);
 }
 
-int main(int argc, char const *argv[])
-{
+/* int main(int argc, char const *argv[])
+{`
 	int fd;
 	char *buffer = malloc(100);
 	fd = open("text.txt", O_RDONLY);
@@ -88,4 +88,4 @@ int main(int argc, char const *argv[])
 	puts(b);
 	b = get_next_line(fd);
 	puts(b);
-}
+} */
