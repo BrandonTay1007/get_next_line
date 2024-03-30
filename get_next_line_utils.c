@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:13 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/28 17:45:09 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:21:35 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,18 @@ size_t	ft_strlcat(char *dest, char *src, size_t size)
 		src++;
 	}
 	return (i);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*s;
+
+	if (!s1 || !s2)
+		return (NULL);
+	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s)
+		return (NULL);
+	ft_strlcpy(s, (char *) s1, ft_strlen(s1) + 1);
+	ft_strlcat(s, (char *) s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (s);
 }

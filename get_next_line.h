@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:15 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/28 17:58:24 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:24:02 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *src, int c);
 char	*ft_strdup(char *src);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
