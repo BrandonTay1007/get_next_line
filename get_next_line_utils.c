@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:13 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/30 21:09:07 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/31 15:06:45 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,33 +72,6 @@ char	*ft_strdup(char *src)
 	return (a);
 }
 
-size_t	ft_strlcat(char *dest, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < size && dest[i])
-	{
-		i++;
-	}
-	if (i < size)
-	{
-		while (i + 1 < size && *src && size)
-		{
-			dest[i] = *src;
-			src++;
-			i++;
-		}
-		dest[i] = '\0';
-	}
-	while (*src)
-	{
-		i++;
-		src++;
-	}
-	return (i);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s;
@@ -109,12 +82,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = -1;
 	if (!s1 || !s2)
 		return (NULL);
-	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	if (!s)
 		return (NULL);
 	while (s1[++i])
 		s[++j] = s1[i];
-	i = 0;
+	i = -1;
 	while (s2[++i])
 		s[++j] = s2[i];
 	return (s);

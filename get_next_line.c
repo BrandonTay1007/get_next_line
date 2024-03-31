@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:10 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/31 00:02:11 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/03/31 15:46:44 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,67 +25,85 @@ int		c_nl(char *src)
 	}
 	return (0);
 }
-char	*set_line(char* src)
+char	*fill_line(char* src)
 {
 	long long	i;
+	char	*buf;
 	char	*dest;
 
 	i = 0;
 	while (src[i] != '\n' && src[i] != '\0')
 		i++;
-	dest = malloc(i + 2);
-	if (!dest)
+	buf = malloc(i + 2);
+	if (!buf)
 		return (NULL);
-	ft_strlcpy(dest, src, i + 2);
+	ft_strlcpy(buf, src, i + 2);
+	dest = buf;
+	if (dest)
+		free(buf);
 	return (dest);
 }
+char	*fill_buf(int fd, char* left_s, char* buf)
+{
+	int			b_read;
 
-char *get_next_line(int fd)
+	if (left_s)
+		ft_strlcpy(buf, left_s, ft_strlen(left_s));
+	while(!c_nl(buf))
+	{
+		b_read = read(fd, buf, BUFFER_SIZE);
+		if (b_read <= 0)
+			break;
+		else
+		{
+			if (!left_s)
+				left_s = ft_strdup(buf);
+			else
+			{
+				free(left_s);
+				left_s = ft_strjoin(left_s, buf);
+			}
+		}
+	}
+	return (left_s);
+}
+char	*get_next_line(int fd)
 {
 	static char		*left_s;
 	char 		*buffer;
 	char		*s;
-	int			b_read;
-
-	if (BUFFER_SIZE > INT_MAX / 2 || BUFFER_SIZE <= 0)
+	
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0 ,0) < 0)
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	b_read = read (fd, buffer, BUFFER_SIZE);
-	if (buffer == NULL)
-		return (NULL);
-	if (left_s == NULL)
-		left_s = ft_strdup(buffer);
-	else if (*left_s == '\n')
-		left_s += 1;
-	while (b_read && !c_nl(left_s))
-	{
-		b_read = read (fd, buffer, BUFFER_SIZE);
-		if (b_read)
-			left_s = ft_strjoin(left_s, buffer);
-	}
+	left_s = fill_buf(fd, left_s, buffer);
 	free(buffer);
-	s = set_line(left_s);
+	if (!left_s)
+		return (NULL);
+	s = fill_line(left_s);
 	left_s = ft_strchr(left_s, '\n');
+	if (left_s != NULL && *(left_s + 1) != '\0')
+		left_s++;
+	else
+		left_s = NULL;
 	return (s);
 }
 
 /* int main(int argc, char const *argv[])
-{`
+{
 	int fd;
-	char *buffer = malloc(100);
+	char *h;
 	fd = open("text.txt", O_RDONLY);
-	char *h = get_next_line(fd);
+	h = get_next_line(fd);
 	puts(h);
-	char *a = get_next_line(fd);
-	puts(a);
-	char *b = get_next_line(fd);
-	puts(b);
-	b = get_next_line(fd);
-	puts(b);
-	b = get_next_line(fd);
-	puts(b);
-	b = get_next_line(fd);
-	puts(b);
+	h = get_next_line(fd);
+	puts(h);
+	h = get_next_line(fd);
+	puts(h);
+	h = get_next_line(fd);
+	puts(h);
+	h = get_next_line(fd);
+	puts(h);
 } */
