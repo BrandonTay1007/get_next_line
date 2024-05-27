@@ -6,7 +6,7 @@
 /*   By: twei-yo- <twei-yo-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 08:48:13 by twei-yo-          #+#    #+#             */
-/*   Updated: 2024/03/31 15:06:45 by twei-yo-         ###   ########.fr       */
+/*   Updated: 2024/05/26 21:28:44 by twei-yo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,18 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_strchr(const char *src, int c)
 {
-	while (*src)
+	if (src)
 	{
-		if ((unsigned char)*src == (unsigned char)c)
-			return ((char *)src);
-		src++;
-	}
-	if (!(unsigned char)c)
-		return ((char *)src);
-	return (NULL);
-}
-
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size)
-	{
-		while (i + 1 < size && src[i])
+		while (*src)
 		{
-			dest[i] = src[i];
-			i++;
+			if ((unsigned char)*src == (unsigned char)c)
+				return ((char *)src);
+			src++;
 		}
-		dest[i] = '\0';
+		if (!(unsigned char)c)
+			return ((char *)src);	
 	}
-	while (src[i])
-		i++;
-	return (i);
+	return (NULL);
 }
 
 char	*ft_strdup(char *src)
@@ -82,7 +66,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = -1;
 	if (!s1 || !s2)
 		return (NULL);
-	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	s = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!s)
 		return (NULL);
 	while (s1[++i])
@@ -90,5 +74,25 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = -1;
 	while (s2[++i])
 		s[++j] = s2[i];
+	s[++j] = '\0';
 	return (s);
+}
+
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (size)
+	{
+		while (i + 1 < size && src[i])
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+	}
+	while (src[i])
+		i++;
+	return (i);
 }
