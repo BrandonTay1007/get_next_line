@@ -10,7 +10,7 @@
 /*                                                  	                      */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*set_buffer(int fd, char *left_s)
 {
@@ -80,35 +80,40 @@ char	*trim_left_s(char *left_s)
 
 char	*get_next_line(int fd)
 {
-	static char	*left_s = NULL;
+	static char	*left_s[MAX_FD];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	left_s = set_buffer(fd, left_s);
-	if (left_s)
-		line = set_line(left_s);
+	left_s[fd] = set_buffer(fd, left_s[fd]);
+	if (left_s[fd])
+		line = set_line(left_s[fd]);
 	else
 	{
-		free(left_s);
+		free(left_s[fd]);
 		line = NULL;
-		left_s = NULL;
+		left_s[fd] = NULL;
 		return (NULL);
 	}
-	left_s = trim_left_s(left_s);
+	left_s[fd] = trim_left_s(left_s[fd]);
 	return (line);
 }
 
 /* int main()
 {
 	int fd = open("text.txt", O_RDONLY);
+	int	fd2 = open("text2.txt", O_RDONLY);
+	char	*b;
 	char	*a;
 	int	i = 0;
 	while (i < 5)
 	{
 		a = get_next_line(fd);
+		b = get_next_line(fd2);
 		printf("[%i]%s\n", i, a);
+		printf("[%i]%s\n", i, b);
 		free(a);
+		free(b);
 		i++;
 	}
 	return 0;
